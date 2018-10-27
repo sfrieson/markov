@@ -25,8 +25,6 @@ def process(line):
 
 clean_lines = [process(line) for line in file]
 
-# print(clean_lines)
-
 # split paragraphs into sentences
 
 def split_paragraph(paragraph, all_sentences):

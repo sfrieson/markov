@@ -25,7 +25,7 @@ Approach
 
 Other things to think about:
 module pattern https://docs.python.org/3/tutorial/modules.html
-testing framework
+testing framework https://docs.python-guide.org/writing/tests/
 concurrency https://www.blopig.com/blog/2016/08/processing-large-files-using-python/
 
 
