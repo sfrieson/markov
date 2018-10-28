@@ -1,6 +1,6 @@
 import re
 
-WORD = r'\b\w+\b'
+WORD = r"\b(?:\w|['’])+\b"
 PUNCTUATION = r'[.!?]'
 OTHER_NON_WORDS = r'\W'
 TOKEN_RE = re.compile('|'.join([WORD, PUNCTUATION, OTHER_NON_WORDS]))

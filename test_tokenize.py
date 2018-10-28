@@ -8,6 +8,17 @@ class TestTokenize(unittest.TestCase):
     def test_makes_punctuation_its_own_token(self):
         self.assertEqual(tokenize.split('foo.'), ['foo', '.'])
     
+    def test_keeps_contractions_together(self):
+        self.assertEqual(
+            tokenize.split("it's mine"),
+            ["it's", 'mine']
+        )
+        # smart quote
+        self.assertEqual(
+            tokenize.split("it’s mine"),
+            ["it’s", 'mine']
+        )
+    
     def test_tokenizes_strings(self):
         self.assertEqual(
             tokenize.tokenize('Hello, my name is Steven.'),

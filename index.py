@@ -1,3 +1,4 @@
+import re
 import cleanup
 import prepare
 import random
@@ -5,6 +6,10 @@ import markov_tokenize as tokenize
 
 START = '_START_'
 END = '_END_'
+
+LEFT_JOIN_PUNCTUATION = re.compile(r"['’”,]")
+RIGHT_JOIN_PUNCTUATION = re.compile(r"[“]")
+CONTEXTUAL_JOIN_PUNCTUATION = re.compile(r'["]')
 
 def make_pairs(tokens, pairs):
     """
@@ -48,6 +53,39 @@ def prepare_data(paragraphs):
 
     return model
 
+def join_chain(chain):
+    CAPITALIZED = False
+    sentence = ''
+    chain = iter(chain)
+
+    try:
+        # Punctuation might come before first word
+        while not CAPITALIZED:
+            link = next(chain)
+            if re.match(r'^\w', link):
+                link = link.capitalize()
+                CAPITALIZED = True
+            sentence += link
+
+        while True:
+            ADD_SPACE_BEFORE = True
+            link = next(chain)
+            previous_character = sentence[len(sentence) - 1]
+
+            if LEFT_JOIN_PUNCTUATION.match(link):
+                ADD_SPACE_BEFORE = False
+                
+            if RIGHT_JOIN_PUNCTUATION.match(previous_character):
+                ADD_SPACE_BEFORE = False
+            
+            if ADD_SPACE_BEFORE:
+                sentence += ' '
+
+            sentence += link
+    except StopIteration:
+        pass
+    return sentence
+
 def generate(pairs):
     last_word = '_START_'
     
@@ -58,4 +96,4 @@ def generate(pairs):
             chain.append(word)
         last_word = word
 
-    return ' '.join(chain)
+    return join_chain(chain)
