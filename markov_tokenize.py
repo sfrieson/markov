@@ -11,7 +11,7 @@ def split(sentence):
     while found:
         token = sentence[0:found.end()]
         if token != '' and token != ' ':
-            tokens.append(token)
+            tokens.append(token.lower())
         sentence = sentence[found.end():]
         found = TOKEN_RE.search(sentence)
     

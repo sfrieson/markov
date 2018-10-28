@@ -8,6 +8,7 @@ def split_paragraph(paragraph):
     Returns a paragraph as a list of sentences. 
     """
     sentences = []
+    print(paragraph)
     found = re.search(SENTENCE_DELIMITER, paragraph)
     while found:
         sentences.append(paragraph[0:found.end() - 1])
